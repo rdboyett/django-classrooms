@@ -10,9 +10,12 @@ from django.contrib.auth.decorators import login_required
 from classrooms.models import *
 from classrooms import settings
 
+from userInfo_profile.views import test_function
+
 
 def test(request):
-	return HttpResponse('your in')
+	getString = test_function()
+	return HttpResponse(getString)
 	
 	
 @login_required
@@ -80,5 +83,38 @@ def dashboard(request, classID=False):
             'currentClass':currentClass,
             'messages':messages,
         })
+
+
+
+
+
+
+
+#---------------------------------- Special Functions ----------------------------------------
+
+
+import string
+from time import time
+from itertools import chain
+from random import seed, choice, sample
+
+
+def generateCode(length=5, digits=3, upper=0, lower=2):
+    seed(time())
+
+    lowercase = string.lowercase.translate(None, "o")
+    uppercase = string.uppercase.translate(None, "O")
+    letters = "{0:s}{1:s}".format(lowercase, uppercase)
+
+    password = list(
+        chain(
+            (choice(uppercase) for _ in range(upper)),
+            (choice(lowercase) for _ in range(lower)),
+            (choice(string.digits) for _ in range(digits)),
+            (choice(letters) for _ in range((length - digits - upper - lower)))
+        )
+    )
+
+    return "".join(sample(password, len(password)))
 
 

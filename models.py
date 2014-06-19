@@ -13,6 +13,10 @@ class Message(models.Model):
     def __unicode__(self):
       return u'%s' % (self.text)
     
+    
+    class Meta:
+        ordering = ['-timeDate']
+    
 
 class HashTag(models.Model):
     tag = models.CharField(max_length=45)
@@ -29,8 +33,9 @@ class Classroom(models.Model):
     name = models.CharField(max_length=45)
     code = models.CharField(max_length=10)
     messages = models.ManyToManyField(Message, blank=True, null=True)
-    allowJoin = models.BooleanField()
+    allowJoin = models.BooleanField(default=True)
     classOwnerID = models.IntegerField()
+    allUserClass = models.BooleanField(default=False)
 
 
     def __unicode__(self):
@@ -42,6 +47,8 @@ class ClassUser(models.Model):
     readOnly = models.BooleanField()
     messages = models.ManyToManyField(Message, blank=True, null=True)
     classrooms = models.ManyToManyField(Classroom, blank=True, null=True)
+    avatarBackColor = models.CharField(max_length=45, blank=True, null=True)
+    avatarTextColor = models.CharField(max_length=45, blank=True, null=True)
 
 
     def __unicode__(self):

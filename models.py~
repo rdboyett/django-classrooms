@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db import models
@@ -37,7 +39,7 @@ class Classroom(models.Model):
 class ClassUser(models.Model):
     user = models.ForeignKey(User)
     teacher = models.BooleanField()
-    readOnly = models.BooleanField()
+    readOnly = models.BooleanField(deafault=False)
     messages = models.ManyToManyField(Message, blank=True, null=True)
     classrooms = models.ManyToManyField(Classroom, blank=True, null=True)
 
